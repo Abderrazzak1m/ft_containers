@@ -6,11 +6,13 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/01 16:14:48 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/03 05:18:19 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iterator_traits.hpp"
+#include <type_traits>
+#include "utils.hpp"
 
 namespace ft
 {
@@ -33,7 +35,6 @@ namespace ft
     explicit ft_vector(const allocator_type &alloc = allocator_type())
       :_alloc(alloc)
     {
-      return ;
     }
     // fill constructor
     explicit ft_vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
@@ -44,10 +45,32 @@ namespace ft
       this->_size = n;
       for(size_type i = 0; i < n; i++)
         this->_alloc.construct(_data + i, val);
+        std::cout << *(this->_data) << std::endl;
+      std::cout << *(this->_data + 1) << std::endl;
+      std::cout << *(this->_data  + 2) << std::endl;
+      std::cout << *(this->_data + 3) << std::endl;
+      std::cout << *(this->_data + 4) << std::endl;
     }
+   //TODOO  // rang vector
     template <class InputIterator>
-    vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-    { 
+    ft_vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+    {
+      (void)alloc;
+      this->_size = last - first;
+      int i = 0;
+      this->_capacity = last - first;
+      this->_data = this->_alloc.allocate(this->_capacity);
+      while(first != (last))
+      {
+        this->_alloc.construct(this->_data + i, *first);
+        i++;
+        first++;
+      }
+      std::cout << *(this->_data) << std::endl;
+      std::cout << *(this->_data + 1) << std::endl;
+      std::cout << *(this->_data  + 2) << std::endl;
+      std::cout << *(this->_data + 3) << std::endl;
+      std::cout << *(this->_data + 4) << std::endl;
     }
 
     
