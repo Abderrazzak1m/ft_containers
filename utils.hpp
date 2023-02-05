@@ -6,18 +6,23 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 17:16:24 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/03 07:34:05 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/05 18:59:05 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include<iostream>
+
 
 namespace ft
 {
     //enable if
     template <bool B, class T = void>
-	struct enable_if {};
+	struct enable_if {
+       
+    };
 
 	template <class T>
-	struct enable_if<true, T> { typedef T type; };
+	struct enable_if<true, T> { typedef T type;};
     
 
     //is integral type
@@ -33,4 +38,74 @@ namespace ft
     {
         static const bool value = true;
     };
-    
+    template <>
+    struct is_integral<int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<char>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<char16_t>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<char32_t>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<wchar_t>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<signed char>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<short int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<long int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<long long int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<unsigned char>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<unsigned short int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<unsigned int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<unsigned long int>
+    {
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<unsigned long long int>
+    {
+        static const bool value = true;
+    };
+}

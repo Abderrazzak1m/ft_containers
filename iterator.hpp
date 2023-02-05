@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 22:17:33 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/01 03:02:49 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/05 20:02:15 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 namespace ft
 {
     template<typename T>
-    class ft_iterator
+    class iterator
     {
         public:
             //Member types
@@ -28,14 +28,17 @@ namespace ft
             typedef T*                                  Pointer;
             typedef typename  std::ptrdiff_t                      difference_type;
             //consractor
-            ft_iterator(){}
-            ft_iterator(const ft_iterator& other)
+            iterator(){}
+            iterator(Pointer ptr):current(ptr)
+            {
+            }
+            iterator(const iterator& other)
             {
                 *this = other;
             }         
-            ft_iterator& operator=(const ft_iterator& other)
+            iterator& operator=(const iterator& other)
             {
-                *this->current = other.current;
+                this->current = other.current;
                 return (*this);   
             }
             //operator
@@ -48,46 +51,46 @@ namespace ft
                 return this->current;
             } 
             // Comparison operators
-            bool operator==(const ft_iterator& other) const
+            bool operator==(const iterator& other) const
             {
                 return current == other.current;
             }
-            bool operator!=(const ft_iterator& other) const
+            bool operator!=(const iterator& other) const
             {
                 return current != other.current;
             }
-            bool operator<(const ft_iterator& other) const
+            bool operator<(const iterator& other) const
             {
                 return(current < other.current);
             }
-            bool operator>(const ft_iterator& other) const
+            bool operator>(const iterator& other) const
             {
                 return(current > other.current);
             }
-            bool operator<=(const ft_iterator& other) const
+            bool operator<=(const iterator& other) const
             {
                 return(current <= other.current);
             }
-            bool operator>=(const ft_iterator& other) const
+            bool operator>=(const iterator& other) const
             {
                 return(current >= other.current);
             }
 
             // Random access operators
-            ft_iterator operator+(int n) 
+            iterator operator+(int n) 
             {
-                return(ft_iterator(this->current + n));
+                return(iterator(this->current + n));
             }
-            ft_iterator operator-(int n) 
+            iterator operator-(int n) 
             {
-                return(ft_iterator(this->current - n));
+                return(iterator(this->current - n));
             }
-            ft_iterator& operator+=(int n) 
+            iterator& operator+=(int n) 
             {
                 this->current += n;
                 return(*this);
             }
-            ft_iterator& operator-=(int n) 
+            iterator& operator-=(int n) 
             {
                 this->current -= n;
                 return(*this);
