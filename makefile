@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Werror
 INC = iterator_traits.hpp \
 	vector.hpp \
 	iterator.hpp \
-	utils.hpp
+	utils.hpp \
+	reverse_iterator.hpp
 SRC = main.cpp 
 
 OBJS = $(SRC:.cpp=.o) 

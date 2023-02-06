@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/05 23:00:25 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/06 18:35:12 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,73 @@ namespace ft
     
     ~vector(){};
     
+    // operator =
     
-    
+    vector& operator= (const vector& x)
+    {
+     
+        this->_data = x._data;
+        this->_size = x._size; 
+        this->_capacity = x._capacity;
+        this->_alloc = x._alloc;
+      
+      return(*this);
+    };
 
+    //iterator
+    iterator begin()
+    {
+      return(this->_data);
+    }
+    iterator end()
+    {
+      return(this->_data + this->size());
+    }
+    //Capacity
+    size_type size() const
+    {
+      return(this->_size);
+    }
+    size_type max_size() const
+    {
+      return(this->_size);
+    }
+    void resize(size_type n)
+    {
+      if(n >= _size)
+        return ;
+      pointer new_data = _alloc.allocate(this->_capacity);
+      for(size_type i = 0; i < n; i++)
+      {
+        _alloc.construct(new_data + i, _data[i]);
+      }
+      _alloc.deallocate(_data, _size);
+      _data = new_data;
+      _size = n;
+      
+    }
+     size_type capacity() const
+    {
+      return(this->_capacity);
+    } 
+    bool empty() const
+    {
+      return(this->_size == 0);
+    }
+    void reserve (size_type n)
+    {
+       if(n <= _capacity)
+        return ;
+      pointer new_data = _alloc.allocate(n);
+      for(size_type i = 0; i < _size; i++)
+      {
+        _alloc.construct(new_data + i, _data[i]);
+      }
+      _alloc.deallocate(_data, _size);
+      _data = new_data;
+      _capacity = n;
+
+    }
   private:
     Alloc _alloc;
     pointer _data;
