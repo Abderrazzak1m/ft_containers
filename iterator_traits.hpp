@@ -6,10 +6,12 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:34:15 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/05 19:54:22 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 01:00:17 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ITERATOR_TRAITS_HPP
+#define ITERATOR_TRAITS_HPP
 #include <iostream>
 #include <iterator>
 #include <cstddef>
@@ -22,10 +24,11 @@ namespace ft
     class iterator_traits   //< iterator <T> >
     {
         public:
-            typedef typename std::random_access_iterator_tag      iterator_category;
+            typedef typename T::iterator_category      iterator_category;
             typedef  T                                   value_type;
-            typedef  T&                                  Reference;
-            typedef  T*                                  Pointer;
-            typedef typename  std::ptrdiff_t                      difference_type;  
+            typedef typename T::reference                                reference;
+            typedef  typename T::pointer                                  pointer;
+            typedef typename  T::difference_type                      difference_type;  
     };
 }
+#endif

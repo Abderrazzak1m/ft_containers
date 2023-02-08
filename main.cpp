@@ -1,40 +1,85 @@
 #include <vector>
-#include "reverse_iterator.hpp"
 #include "vector.hpp"
 #include <iostream>
 using namespace std;
+// struct Point {
+//     int x;
+//     int y;
+// };
 int main()
 {
-    // ft::vector
-    // vector<int> a;
-    // int ar[] = {1, 2, 3};
-//    ft::vector<int> d(5,12);
-//    ft::vector<int>::iterator d(ar);
-//    std::cout << *d << std::endl;
-//    std::cout << *(d + 1) << std::endl;
-//    std::cout << *(d + 2) << std::endl;
-    // a.push_back(5);
-    // a.push_back(7);
-    // a.push_back(6);
-    // a.push_back(8);
-    // a.push_back(9);
-    // vector<int>::iterator  c = a.begin();
-    // vector<int>::iterator  v = a.end();
-     ft::vector<std::string> h(6, "hello");
-     h.reserve(6);
-    //  ft::vector<int> d;
-    //  h.resize(3);
-    //  d = h;
-     ft::vector<std::string>::iterator it = h.begin();
-     while(it != h.end())
-     {
-        std::cout << *it << std::endl;
-        it = it + 1;
-     }
-    //  std::cout<< h.size() << std::endl;
+    // std::vector<Point> points1;
+    // Point a;
+    // a.x = 1;
+    // a.y = 2;
+    // Point b;
+    // b.x = 3;
+    // b.y = 4;
+    // points1.push_back(a);
+    // points1.push_back(b);
+
+    // ft::vector<Point> points(points1.begin(), points1.end());
+    // // Reverse iteration over the vector using reverse_iterator
+    // ft::vector<Point>::reverse_iterator rit = points.rbegin();
+    // // ft::vector<Point>::reverse_iterator rit1 = points.rend();
+    // std::cout << rit->x << " " << rit->y << std::endl;
+    // ++rit;
+    // std::cout << rit->x << " " << rit->y << std::endl;
+    // ++rit;
+    // std::cout << rit->x << " " << rit->y << std::endl;
+    // ++rit;
+
+    // return 0;
+  // std::vector<int> myvector;
+  // myvector.push_back(5);
+  // myvector.push_back(4);
+  // myvector.push_back(0);
+  // myvector.push_back(12);
+  // ft::vector<int> a(myvector.begin(), myvector.end());
+  // ft::vector<int>::reverse_iterator it = a.rbegin();
+  // ft::vector<int>::reverse_iterator cp(it);
+  // std::cout<< *(it) << std::endl;
+  // std::cout<< *(cp) << std::endl;
+  // // it++;
+  // // it++;
+  // // it++;
+  // // it++;
+  // std::cout<< *(it - 1) << std::endl;
+  // std::cout<< *(cp - 1) << std::endl;
+    // ft::vector<int>::reverse_iterator it2 = a.rend();
+    // std::vector<int>::reverse_iterator it1 = myvector.rend();
     
-    cout << h.capacity() << std::endl;
-    cout << h.size() << std::endl;
-    // cout << a.size() << std::endl;
-    // system("leaks ft_container");
+    // //   ft::vector<int>::iterator it  = *it2;
+    // // it2--;
+    // it2 -= 2;
+    // it1 -= 2;
+    // std::cout <<"for ft " << *(it2 )<<std::endl;
+    // std::cout << "for std " <<*(it1 )<<std::endl;
+    // it2++;
+    // it1++;
+  
+    // std::cout <<"for ft " << *(it2 )<<std::endl;
+    // std::cout << "for std " <<*(it1 )<<std::endl;
+    // it2++;
+    // it1++;
+  
+    // std::cout <<"for ft " << *(it2 )<<std::endl;
+    // std::cout << "for std " <<*(it1 )<<std::endl;
+    // it2++;
+    // it1++;
+  
+    // std::cout <<"for ft " << *(it2 )<<std::endl;
+    // std::cout << "for std " <<*(it1 )<<std::endl;
+    // it2++;
+    // it1++;
+  
+    // std::cout <<"for ft " << *(it2 )<<std::endl;
+    // std::cout << "for std " <<*(it1 )<<std::endl;
+//   while(it != a.end())
+//   {
+//     std::cout << *it <<std::endl;
+//     it++;
+//   }
+
+  // return 0;
 }

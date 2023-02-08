@@ -6,12 +6,13 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/06 18:35:12 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 01:28:14 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iterator_traits.hpp"
-#include <type_traits>
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
+#include"reverse_iterator.hpp"
 #include "utils.hpp"
 
 namespace ft
@@ -26,9 +27,11 @@ namespace ft
     typedef typename allocator_type::const_reference const_reference;
     typedef typename allocator_type::pointer pointer;
     typedef typename allocator_type::const_pointer const_pointer;
-    typedef typename ft::iterator<const value_type> iterator;
-    // typedef typename const iterator const_iterator;
-    // typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
+    typedef typename ft::iterator<value_type> iterator;
+    typedef typename ft::iterator<const value_type> const_iterator;
+    typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+    typedef typename ft::reverse_iterator<const iterator> const_reverse_iterator;
+    typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
     typedef typename std::size_t size_type;
 
     // default constructor
@@ -89,6 +92,14 @@ namespace ft
     {
       return(this->_data + this->size());
     }
+    reverse_iterator rbegin()
+    {
+      return reverse_iterator(this->end() - 1);
+    }
+    reverse_iterator rend()
+    {
+      return reverse_iterator(this->begin() - 1);
+    }
     //Capacity
     size_type size() const
     {
@@ -141,3 +152,5 @@ namespace ft
     size_type _capacity;
   };
 }
+
+#endif
