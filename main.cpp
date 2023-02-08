@@ -80,6 +80,11 @@ int main()
 //     std::cout << *it <<std::endl;
 //     it++;
 //   }
+ft::vector<int> a(6, 6);
+ft::vector<int> b(a);
+std::cout << b.capacity() << std::endl;
+std::cout << b.size() << std::endl;
+
 
   // return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 22:17:33 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 01:12:50 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:34:14 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ namespace ft
         }
         iterator &operator=(const iterator &other)
         {
-            this->current = other.current;
+            if(*this!= other)
+                this->current = other.current;
             return (*this);
         }
         // operator
@@ -75,7 +76,6 @@ namespace ft
         {
             return (current >= other.current);
         }
-
         // Random access operators
         iterator operator+(int n) const
         {

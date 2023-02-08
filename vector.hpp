@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 01:28:14 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:46:41 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 
     // default constructor
     explicit vector(const allocator_type &alloc = allocator_type())
-        : _alloc(alloc)
+        : _alloc(alloc),_data(NULL),_size(0),_capacity(0)
     {
     }
     // fill constructor
@@ -52,9 +52,8 @@ namespace ft
     // rang constructor
     template <class InputIterator>
 
-    vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
+    vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0):_alloc(alloc)
     {
-      (void)alloc;
       this->_size = last - first;
       int i = 0;
       this->_capacity = last - first;
@@ -67,6 +66,10 @@ namespace ft
       }
     }
     // destructor
+    vector (const vector& x)
+    {
+      *this = x;
+    }
     
     ~vector(){};
     
