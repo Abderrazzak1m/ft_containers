@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 04:44:23 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 05:25:30 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ namespace ft
       }
       this->data = tmp;
     }
-    // range constructor
+    // range assign
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
     {
@@ -175,6 +175,24 @@ namespace ft
         i++;
       }
       this->data = tmp;
+    }
+    //push_back
+    void push_back (const value_type& val)
+    {
+      if(ft_size == ft_capacity && ft_capacity == 0)
+      {
+        ft_capacity++;
+        data = allocater.allocate(1);
+        allocater.construct(data, val);
+      }
+      else if(ft_size == ft_capacity)
+      {
+        this->reserve(ft_capacity * 2);
+        allocater.construct(data + ft_size, val);
+      }
+      else
+        allocater.construct(data + ft_size, val);
+      ft_size++;
     }
 
   private:

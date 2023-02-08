@@ -80,31 +80,22 @@ int main()
 //     std::cout << *it <<std::endl;
 //     it++;
 //   }
-std::vector<int> a;
-a.push_back(5);
+ft::vector<int> a;
+std::cout <<  a.capacity() << std::endl;
+a.reserve(1);
 a.push_back(3);
-a.push_back(12);
-a.push_back(7);
-// a.push_back(7);
-ft::vector<int> b(a.begin(),a.end());
-// std::vector<int> a(6, 6);
-// ft::vector<int> b(a);
-a.assign(3, 5);
-std::cout << b.capacity() << std::endl;
-std::cout << b.size() << std::endl;
-std::cout << "-------------------" << std::endl;
-b.assign(a.begin(), a.end());
-// a.assign(b.end(), b.begin());
-ft::vector<int>::iterator it = b.begin();
-while(it != b.end())
+a.push_back(3);
+a.push_back(32);
+// a.push_back(333);
+// a.push_back(333);
+// a.push_back(333);
+std::cout <<  a.capacity() << std::endl;
+ft::vector<int>::iterator it = a.begin();
+while(it != a.end())
 {
-  std::cout << *it << std::endl;
+  std::cout<< *it <<std::endl;
   it++;
 }
-std::cout <<"-----------------" << std::endl;
-std::cout << b.capacity() << std::endl;
-std::cout << b.size() << std::endl;
-
 // system("leaks ft_container");
   // return 0;
 }
