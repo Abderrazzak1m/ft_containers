@@ -82,6 +82,7 @@ int main()
 //   }
 ft::vector<int> a(6, 6);
 ft::vector<int> b(a);
+a.reserve(7);
 std::cout << b.capacity() << std::endl;
 std::cout << b.size() << std::endl;
 
