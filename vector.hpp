@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 05:41:47 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 05:44:52 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,30 @@ namespace ft
 
     // default constructor
     explicit vector(const allocator_type &alloc = allocator_type())
-        : allocater(alloc), data(NULL), ft_size(0), ft_capacity(0)
+        : allocater(alloc), vdata(NULL), vsize(0), vcapacity(0)
     {
     }
     // fill constructor
     explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
         : allocater(alloc)
     {
-      ft_capacity = (n > 0) ? n : 1;
-      this->data = allocater.allocate(ft_capacity);
-      this->ft_size = n;
+      vcapacity = (n > 0) ? n : 1;
+      this->vdata = allocater.allocate(vcapacity);
+      this->vsize = n;
       for (size_type i = 0; i < n; i++)
-        this->allocater.construct(data + i, val);
+        this->allocater.construct(vdata + i, val);
     }
     // rang constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0) : allocater(alloc)
     {
-      this->ft_size = last - first;
+      this->vsize = last - first;
       int i = 0;
-      this->ft_capacity = last - first;
-      this->data = this->allocater.allocate(this->ft_capacity);
+      this->vcapacity = last - first;
+      this->vdata = this->allocater.allocate(this->vcapacity);
       while (first != (last))
       {
-        this->allocater.construct(this->data + i, *first);
+        this->allocater.construct(this->vdata + i, *first);
         i++;
         first++;
       }
@@ -76,9 +76,9 @@ namespace ft
     vector &operator=(const vector &x)
     {
 
-      this->data = x.data;
-      this->ft_size = x.ft_size;
-      this->ft_capacity = x.ft_capacity;
+      this->vdata = x.vdata;
+      this->vsize = x.vsize;
+      this->vcapacity = x.vcapacity;
       this->allocater = x.allocater;
 
       return (*this);
@@ -87,11 +87,11 @@ namespace ft
     // iterator
     iterator begin()
     {
-      return (this->data);
+      return (this->vdata);
     }
     iterator end()
     {
-      return (this->data + this->size());
+      return (this->vdata + this->size());
     }
     reverse_iterator rbegin()
     {
@@ -104,108 +104,108 @@ namespace ft
     // Capacity
     size_type size() const
     {
-      return (this->ft_size);
+      return (this->vsize);
     }
     size_type maxsize() const
     {
-      return (this->ft_size);
+      return (this->vsize);
     }
     void resize(size_type n)
     {
-      if (n >= ft_size)
+      if (n >= vsize)
         return;
-      pointer newdata = allocater.allocate(this->ft_capacity);
+      pointer newvdata = allocater.allocate(this->vcapacity);
       for (size_type i = 0; i < n; i++)
       {
-        allocater.construct(newdata + i, data[i]);
+        allocater.construct(newvdata + i, vdata[i]);
       }
-      allocater.deallocate(data, ft_size);
-      data = newdata;
-      ft_size = n;
+      allocater.deallocate(vdata, vsize);
+      vdata = newvdata;
+      vsize = n;
     }
     size_type capacity() const
     {
-      return (this->ft_capacity);
+      return (this->vcapacity);
     }
     bool empty() const
     {
-      return (this->ft_size == 0);
+      return (this->vsize == 0);
     }
     void reserve(size_type n)
     {
-      if (n <= ft_capacity)
+      if (n <= vcapacity)
         return;
-      pointer newdata = allocater.allocate(n);
-      for (size_type i = 0; i < ft_size; i++)
+      pointer newvdata = allocater.allocate(n);
+      for (size_type i = 0; i < vsize; i++)
       {
-        allocater.construct(newdata + i, data[i]);
+        allocater.construct(newvdata + i, vdata[i]);
       }
-      allocater.deallocate(data, ft_size);
-      data = newdata;
-      ft_capacity = n;
+      allocater.deallocate(vdata, vsize);
+      vdata = newvdata;
+      vcapacity = n;
     }
     // fill assign
     void assign(size_type n, const value_type &val)
     {
-      this->ft_size = n;
-      allocater.deallocate(data, this->ft_capacity);
-      if (n > this->ft_capacity)
-        this->ft_capacity = n;
-      pointer tmp = allocater.allocate(this->ft_capacity);
+      this->vsize = n;
+      allocater.deallocate(vdata, this->vcapacity);
+      if (n > this->vcapacity)
+        this->vcapacity = n;
+      pointer tmp = allocater.allocate(this->vcapacity);
       for (size_type i = 0; i < n; i++)
       {
         allocater.construct(tmp + i, val);
       }
-      this->data = tmp;
+      this->vdata = tmp;
     }
     // range assign
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
     {
-      this->ft_size = last - first;
+      this->vsize = last - first;
       int i = 0;
-      allocater.deallocate(data, this->ft_capacity);
-      if (this->ft_size > this->ft_capacity)
-        this->ft_capacity = this->ft_size;
-      pointer tmp = allocater.allocate(this->ft_capacity);
+      allocater.deallocate(vdata, this->vcapacity);
+      if (this->vsize > this->vcapacity)
+        this->vcapacity = this->vsize;
+      pointer tmp = allocater.allocate(this->vcapacity);
       while(first != last)
       {
         allocater.construct(tmp + i, *first);
         first++;
         i++;
       }
-      this->data = tmp;
+      this->vdata = tmp;
     }
     //push_back
     void push_back (const value_type& val)
     {
-      if(ft_size == ft_capacity && ft_capacity == 0)
+      if(vsize == vcapacity && vcapacity == 0)
       {
-        ft_capacity++;
-        data = allocater.allocate(1);
-        allocater.construct(data, val);
+        vcapacity++;
+        vdata = allocater.allocate(1);
+        allocater.construct(vdata, val);
       }
-      else if(ft_size == ft_capacity)
+      else if(vsize == vcapacity)
       {
-        this->reserve(ft_capacity * 2);
-        allocater.construct(data + ft_size, val);
+        this->reserve(vcapacity * 2);
+        allocater.construct(vdata + vsize, val);
       }
       else
-        allocater.construct(data + ft_size, val);
-      ft_size++;
+        allocater.construct(vdata + vsize, val);
+      vsize++;
     }
     //pop_back
     void pop_back()
     {
-      allocater.construct(data + ft_size, NULL);
-      ft_size--;
+      allocater.construct(vdata + vsize, NULL);
+      vsize--;
     }
 
   private:
     Alloc allocater;
-    pointer data;
-    size_type ft_size;
-    size_type ft_capacity;
+    pointer vdata;
+    size_type vsize;
+    size_type vcapacity;
   };
 }
 
