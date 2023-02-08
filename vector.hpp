@@ -6,13 +6,13 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 03:34:51 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 04:44:23 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
-# define VECTOR_HPP
-#include"reverse_iterator.hpp"
+#define VECTOR_HPP
+#include "reverse_iterator.hpp"
 #include "utils.hpp"
 
 namespace ft
@@ -36,7 +36,7 @@ namespace ft
 
     // default constructor
     explicit vector(const allocator_type &alloc = allocator_type())
-        : allocater(alloc),data(NULL),ft_size(0),ft_capacity(0)
+        : allocater(alloc), data(NULL), ft_size(0), ft_capacity(0)
     {
     }
     // fill constructor
@@ -51,7 +51,7 @@ namespace ft
     }
     // rang constructor
     template <class InputIterator>
-    vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0):allocater(alloc)
+    vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0) : allocater(alloc)
     {
       this->ft_size = last - first;
       int i = 0;
@@ -65,33 +65,33 @@ namespace ft
       }
     }
     // copy constructor
-    vector (const vector& x)
+    vector(const vector &x)
     {
       *this = x;
     }
-    
-    //destroctor
+
+    // destroctor
     ~vector(){};
     // operator =
-    vector& operator= (const vector& x)
+    vector &operator=(const vector &x)
     {
-     
-        this->data = x.data;
-        this->ft_size = x.ft_size; 
-        this->ft_capacity = x.ft_capacity;
-        this->allocater = x.allocater;
-      
-      return(*this);
+
+      this->data = x.data;
+      this->ft_size = x.ft_size;
+      this->ft_capacity = x.ft_capacity;
+      this->allocater = x.allocater;
+
+      return (*this);
     };
 
-    //iterator
+    // iterator
     iterator begin()
     {
-      return(this->data);
+      return (this->data);
     }
     iterator end()
     {
-      return(this->data + this->size());
+      return (this->data + this->size());
     }
     reverse_iterator rbegin()
     {
@@ -101,51 +101,82 @@ namespace ft
     {
       return reverse_iterator(this->begin() - 1);
     }
-    //Capacity
+    // Capacity
     size_type size() const
     {
-      return(this->ft_size);
+      return (this->ft_size);
     }
     size_type maxsize() const
     {
-      return(this->ft_size);
+      return (this->ft_size);
     }
     void resize(size_type n)
     {
-      if(n >= ft_size)
-        return ;
+      if (n >= ft_size)
+        return;
       pointer newdata = allocater.allocate(this->ft_capacity);
-      for(size_type i = 0; i < n; i++)
+      for (size_type i = 0; i < n; i++)
       {
         allocater.construct(newdata + i, data[i]);
       }
       allocater.deallocate(data, ft_size);
       data = newdata;
       ft_size = n;
-      
     }
-     size_type capacity() const
+    size_type capacity() const
     {
-      return(this->ft_capacity);
-    } 
+      return (this->ft_capacity);
+    }
     bool empty() const
     {
-      return(this->ft_size == 0);
+      return (this->ft_size == 0);
     }
-    void reserve (size_type n)
+    void reserve(size_type n)
     {
-       if(n <= ft_capacity)
-        return ;
+      if (n <= ft_capacity)
+        return;
       pointer newdata = allocater.allocate(n);
-      for(size_type i = 0; i < ft_size; i++)
+      for (size_type i = 0; i < ft_size; i++)
       {
         allocater.construct(newdata + i, data[i]);
       }
       allocater.deallocate(data, ft_size);
       data = newdata;
       ft_capacity = n;
-
     }
+    // fill assign
+    void assign(size_type n, const value_type &val)
+    {
+      this->ft_size = n;
+      allocater.deallocate(data, this->ft_capacity);
+      if (n > this->ft_capacity)
+        this->ft_capacity = n;
+      pointer tmp = allocater.allocate(this->ft_capacity);
+      for (size_type i = 0; i < n; i++)
+      {
+        allocater.construct(tmp + i, val);
+      }
+      this->data = tmp;
+    }
+    // range constructor
+    template <class InputIterator>
+    void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
+    {
+      this->ft_size = last - first;
+      int i = 0;
+      allocater.deallocate(data, this->ft_capacity);
+      if (this->ft_size > this->ft_capacity)
+        this->ft_capacity = this->ft_size;
+      pointer tmp = allocater.allocate(this->ft_capacity);
+      while(first != last)
+      {
+        allocater.construct(tmp + i, *first);
+        first++;
+        i++;
+      }
+      this->data = tmp;
+    }
+
   private:
     Alloc allocater;
     pointer data;
