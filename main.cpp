@@ -80,7 +80,7 @@ int main()
 //     std::cout << *it <<std::endl;
 //     it++;
 //   }
-ft::vector<int> a;
+std::vector<int> a(6, 2);
 std::cout <<  a.capacity() << std::endl;
 a.reserve(1);
 a.push_back(3);
@@ -90,7 +90,28 @@ a.push_back(32);
 // a.push_back(333);
 // a.push_back(333);
 std::cout <<  a.capacity() << std::endl;
-ft::vector<int>::iterator it = a.begin();
+std::vector<int>::iterator it = a.begin();
+while(it != a.end())
+{
+  std::cout<< *it <<std::endl;
+  it++;
+}
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+a.pop_back();
+
+it = a.begin();
+std::cout<< "-----------"<<std::endl;
+std::cout <<  a.capacity() << std::endl;
+std::cout <<  a.size() << std::endl;
+std::cout<< "-----------"<<std::endl;
 while(it != a.end())
 {
   std::cout<< *it <<std::endl;

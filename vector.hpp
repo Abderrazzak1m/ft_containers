@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 05:25:30 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/08 05:41:47 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,12 @@ namespace ft
       else
         allocater.construct(data + ft_size, val);
       ft_size++;
+    }
+    //pop_back
+    void pop_back()
+    {
+      allocater.construct(data + ft_size, NULL);
+      ft_size--;
     }
 
   private:
