@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 05:44:52 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/12 23:26:59 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ namespace ft
       if (this->vsize > this->vcapacity)
         this->vcapacity = this->vsize;
       pointer tmp = allocater.allocate(this->vcapacity);
-      while(first != last)
+      while (first != last)
       {
         allocater.construct(tmp + i, *first);
         first++;
@@ -176,16 +176,16 @@ namespace ft
       }
       this->vdata = tmp;
     }
-    //push_back
-    void push_back (const value_type& val)
+    // push_back
+    void push_back(const value_type &val)
     {
-      if(vsize == vcapacity && vcapacity == 0)
+      if (vsize == vcapacity && vcapacity == 0)
       {
         vcapacity++;
         vdata = allocater.allocate(1);
         allocater.construct(vdata, val);
       }
-      else if(vsize == vcapacity)
+      else if (vsize == vcapacity)
       {
         this->reserve(vcapacity * 2);
         allocater.construct(vdata + vsize, val);
@@ -194,11 +194,80 @@ namespace ft
         allocater.construct(vdata + vsize, val);
       vsize++;
     }
-    //pop_back
+    // pop_back
     void pop_back()
     {
       allocater.construct(vdata + vsize, NULL);
       vsize--;
+    }
+    /*insert single element*/
+    iterator insert(iterator position, const value_type &val)
+    {
+      iterator it = this->begin();
+      int i = 0;
+      pointer tmp = allocater.allocate(this->vcapacity + 1);
+      while (it != position)
+      {
+        allocater.construct(tmp + i, *it);
+        it++;
+        i++;
+      }
+      allocater.construct(tmp + i, val);
+      i++;
+      while (it != this->end())
+      {
+        allocater.construct(tmp + i, *it);
+        i++;
+        it++;
+      }
+      allocater.deallocate(vdata, this->vcapacity);
+      vdata = tmp;
+      this->vsize++;
+      return (position);
+    }
+    /*fill*/
+    void insert(iterator position, size_type n, const value_type &val)
+    {
+      size_type i = 0;
+      iterator it = position;
+      vector tmp(this->begin(), position);
+      tmp.reserve(this->capacity() + n);
+      while (i < n)
+      {
+        tmp.push_back(val);
+        i++;
+      }
+      while (position != this->end())
+      {
+        tmp.push_back(*position);
+        position++;
+      }
+      // tmp->vsize = this->vsize + n;
+      *this = tmp;
+    }
+    /*******************range insert*******************************************************/
+    template <class InputIterator>
+    void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
+    {
+      iterator it = begin();
+      size_type i = 0;
+      if(this->capacity() < this->size() + (last - first))
+        this->vcapacity += (last - first);
+      vsize += (last - first);
+      pointer tmp = allocater.allocate(vcapacity);
+      while(it != position)
+        allocater.construct(tmp + i++, *it++);
+      while(first != last)
+      {
+        allocater.construct(tmp + i++, *first++);
+        
+      }
+      while(position != end())
+        allocater.construct(tmp + i++, *position++);
+      vdata = tmp;
+      // while (position != end())
+      //   push_back(*position++);
+  
     }
 
   private:

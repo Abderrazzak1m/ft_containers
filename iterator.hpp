@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 22:17:33 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/08 02:34:14 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/12 20:32:21 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ namespace ft
         iterator operator-(int n) const
         {
             return (iterator(this->current - n));
+        }
+        difference_type operator-(const iterator& other) const
+        {
+            return (this->current - other.current);
         }
         iterator &operator+=(int n)
         {
