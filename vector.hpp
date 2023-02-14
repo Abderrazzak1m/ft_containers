@@ -6,7 +6,7 @@
 /*   By: amiski <amiski@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:41:43 by amiski            #+#    #+#             */
-/*   Updated: 2023/02/12 23:26:59 by amiski           ###   ########.fr       */
+/*   Updated: 2023/02/14 02:49:39 by amiski           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ namespace ft
     typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
     typedef typename std::size_t size_type;
 
-    // default constructor
+
+    /************ Member functions *******/
     explicit vector(const allocator_type &alloc = allocator_type())
         : allocater(alloc), vdata(NULL), vsize(0), vcapacity(0)
     {
     }
-    // fill constructor
     explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
         : allocater(alloc)
     {
@@ -49,7 +49,6 @@ namespace ft
       for (size_type i = 0; i < n; i++)
         this->allocater.construct(vdata + i, val);
     }
-    // rang constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0) : allocater(alloc)
     {
@@ -64,15 +63,11 @@ namespace ft
         first++;
       }
     }
-    // copy constructor
     vector(const vector &x)
     {
       *this = x;
     }
-
-    // destroctor
     ~vector(){};
-    // operator =
     vector &operator=(const vector &x)
     {
 
@@ -84,7 +79,8 @@ namespace ft
       return (*this);
     };
 
-    // iterator
+    /************ iterator **************/
+    
     iterator begin()
     {
       return (this->vdata);
@@ -101,7 +97,9 @@ namespace ft
     {
       return reverse_iterator(this->begin() - 1);
     }
-    // Capacity
+    
+    /************ Capacity **************/
+    
     size_type size() const
     {
       return (this->vsize);
@@ -144,7 +142,9 @@ namespace ft
       vdata = newvdata;
       vcapacity = n;
     }
-    // fill assign
+
+    /************ Modifiers *************/
+
     void assign(size_type n, const value_type &val)
     {
       this->vsize = n;
@@ -158,7 +158,6 @@ namespace ft
       }
       this->vdata = tmp;
     }
-    // range assign
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
     {
@@ -176,7 +175,6 @@ namespace ft
       }
       this->vdata = tmp;
     }
-    // push_back
     void push_back(const value_type &val)
     {
       if (vsize == vcapacity && vcapacity == 0)
@@ -194,13 +192,11 @@ namespace ft
         allocater.construct(vdata + vsize, val);
       vsize++;
     }
-    // pop_back
     void pop_back()
     {
-      allocater.construct(vdata + vsize, NULL);
+      allocater.destroy(vdata + vsize);
       vsize--;
     }
-    /*insert single element*/
     iterator insert(iterator position, const value_type &val)
     {
       iterator it = this->begin();
@@ -225,7 +221,6 @@ namespace ft
       this->vsize++;
       return (position);
     }
-    /*fill*/
     void insert(iterator position, size_type n, const value_type &val)
     {
       size_type i = 0;
@@ -245,31 +240,81 @@ namespace ft
       // tmp->vsize = this->vsize + n;
       *this = tmp;
     }
-    /*******************range insert*******************************************************/
     template <class InputIterator>
-    void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
+    void insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
     {
       iterator it = begin();
+      difference_type n = this->vcapacity;
       size_type i = 0;
-      if(this->capacity() < this->size() + (last - first))
-        this->vcapacity += (last - first);
+      if (this->capacity() < this->size() + (last - first))
+        n += (last - first);
       vsize += (last - first);
-      pointer tmp = allocater.allocate(vcapacity);
-      while(it != position)
+      pointer tmp = allocater.allocate(n);
+      while (it != position)
         allocater.construct(tmp + i++, *it++);
-      while(first != last)
-      {
+      while (first != last)
         allocater.construct(tmp + i++, *first++);
-        
-      }
-      while(position != end())
+      while (position != end())
         allocater.construct(tmp + i++, *position++);
+      allocater.deallocate(vdata, vcapacity);
       vdata = tmp;
-      // while (position != end())
-      //   push_back(*position++);
-  
+      vcapacity = n;
+    }
+    iterator erase(iterator position)
+    {
+      iterator it = position;
+      while (it != end())
+      {
+        *it = *(it + 1);
+        it++;
+      }
+      allocater.destroy(vdata + vsize);
+      vsize--;
+      return (position);
+    }
+    iterator erase(iterator first, iterator last)
+    {
+      difference_type n = last - first;
+      iterator tmp = first;
+      while (last != end())
+      {
+        *(tmp) = *last;
+        tmp++;
+        last++;
+      }
+      for (size_type i = vsize - n; i != vsize; ++i)
+      {
+        allocater.destroy(vdata + i);
+      }
+      vsize -= n;
+      return (first);
+    }
+    void swap(vector &x)
+    {
+      vector tmp(*this);
+      *this = x;
+      x = tmp;
+    }
+    void clear()
+    {
+      while (vsize)
+      {
+        pop_back();
+        vsize--;
+      }
     }
 
+    /************ Element access ********/
+    
+    reference operator[] (size_type n)
+    {
+      return(*(begin()+ n));
+    }
+    const_reference operator[] (size_type n) const
+    {
+      return(*(begin() + n));
+    }
+    
   private:
     Alloc allocater;
     pointer vdata;

@@ -117,23 +117,64 @@ int main()
 //   it++;
 // }
   // return 0;
-
-  // ft::vector<int> a(30,3);
+/*insert test
+  ft::vector<int> a(30,3);
  
-  // ft::vector<int> b(6, 6);
+  ft::vector<int> b(6, 6);
+  b.push_back(5);
   // b.push_back(5);
-  // // b.push_back(5);
-  // std::cout << "------" << b.capacity() << std::endl;
-  // b.insert(b.begin() + 3, a.begin(), a.end());
-  // std::cout << "------" << b.capacity() << std::endl;
-  // std::cout << "------" << b.size() << std::endl;
-  // ft::vector<int>::iterator it = b.begin();
+  std::cout << "------" << b.capacity() << std::endl;
+  b.insert(b.begin() + 3, a.begin(), a.end());
+  std::cout << "------" << b.capacity() << std::endl;
+  std::cout << "------" << b.size() << std::endl;
+  ft::vector<int>::iterator it = b.begin();
+  while(it != b.end())
+  {
+    std::cout<< *it << std::endl;
+    it++;
+    
+  }*/
+
+  /*erase test*/
+
+  // ft::vector<int> a(6,6);
+  // a.push_back(5);
+  // // a.push_back(5);
+  // a.push_back(6);
+  // a.push_back(6);
+  // a.push_back(6);
+  // std::cout << "cs 1 " << a.size() << std::endl;
+  // std::cout << *a.erase(a.begin(), a.begin() + 6) << std::endl;
+  // ft::vector<int>::iterator it = a.begin();
+  // std::cout << "cs 2 " << a.size() << std::endl;
+  // while(it != a.end())
+  // {
+  //   std::cout << *it << std::endl;
+  //   it++;
+  // } 
+
+  /*swap & clear test*/
+    ft::vector<int> a(6,6);
+    a.push_back(3);
+  // ft::vector<int> b(5,5);
+  // a.swap(b);
+  // b.swap(a);
+  // a.clear();
+  std::cout << a[7] << std::endl;
+  ft::vector<int>::iterator it = a.begin();
+   while(it != a.end())
+  {
+    std::cout << *it << std::endl;
+    it++;
+  }
+  // // a.swap();
+  // std::cout << "-----------\n";
+  // it =b.begin();
   // while(it != b.end())
   // {
-  //   std::cout<< *it << std::endl;
+  //   std::cout << *it << std::endl;
   //   it++;
-    
   // }
-// system("leaks ft_container");
-  // b.insert(a.begin() + 2, 3, 12);
+
+  // system("leaks ft_container");
 }
